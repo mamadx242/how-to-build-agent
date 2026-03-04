@@ -25,7 +25,7 @@ export default async function Page({ params }: DocsPageProps) {
   if (!page) notFound();
 
   const MDX = page.data.body;
-  const markdownUrl = `/llms.mdx/${lang}/docs/${[...page.slugs, 'index.mdx'].join('/')}`;
+  const markdownUrl = `${page.url}.mdx`;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>

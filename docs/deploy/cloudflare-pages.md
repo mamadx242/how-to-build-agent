@@ -2,6 +2,10 @@
 
 本文档对应当前仓库的静态构建配置（`pnpm build` 输出 `out/`）。
 
+> 说明：仓库已包含 `public/_worker.js`，用于：
+> 1) 根路由语言跳转（`/` 根据浏览器 `Accept-Language` 自动跳转到 `/zh/docs` 或 `/en/docs`）；
+> 2) LLM 集成重写（`/en/docs/*.mdx`、`/zh/docs/*.mdx` 与 `Accept: text/markdown` 自动重写到 `llms.mdx` 资源）。
+
 ## 1. 创建 Pages 项目
 
 1. 登录 Cloudflare 控制台。
@@ -41,7 +45,9 @@
 
 ## 5. 上线验收清单
 
-- `https://你的域名/` 可访问并显示语言入口。
+- `https://你的域名/` 会自动按浏览器语言跳转：
+  - 中文浏览器：`/zh/docs`
+  - 非中文浏览器：`/en/docs`
 - `https://你的域名/zh/docs` 可访问。
 - `https://你的域名/en/docs` 可访问。
 - 页面检索可用（搜索弹窗可返回结果）。
