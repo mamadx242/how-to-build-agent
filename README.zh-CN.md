@@ -10,5 +10,4 @@
 
 ## 介绍
 
-- [智能体核心概念](https://learn-agent-docs.pages.dev/zh/docs/definition)
-
+- [智能体核心概念](https://learn-agent.com/zh/docs)

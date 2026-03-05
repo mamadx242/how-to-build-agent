@@ -10,4 +10,4 @@ This documentation will continue to focus on two types of content:
 
 ## Introduction
 
-- [Agent Core Concepts](https://learn-agent-docs.pages.dev/en/docs/definition)
+- [Agent Core Concepts](https://learn-agent.com/en/docs)
