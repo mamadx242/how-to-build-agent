@@ -1,0 +1,159 @@
+---
+title: Agent Core Concepts
+description: Clarify the core concepts in agent systems, from LLMs and prompts to tools, ReAct, memory, RAG, MCP, and skills.
+---
+
+If you follow AI, you have probably been bombarded with these terms: Agent, Tool, Function Calling, ReAct, Memory, RAG, MCP, Skill, and more.
+
+Each term looks understandable on its own, but when you actually try to build an Agent system, the boundaries between concepts become blurry and their relationships become complicated. It is easy to end up in a state of "I kind of get it, but not really."
+
+A more practical issue is that more companies now ask candidates to be "familiar with AI tools," and Agent-related interview questions are increasingly common. Many people have used ChatGPT, Claude, or different Agent products, but when asked questions like "What is the difference between an Agent and a normal LLM call?", "What is Tool Calling?", or "What is ReAct?", answers are often vague. Using a tool is one thing; clearly explaining principles and boundaries is another. This gap gets exposed quickly in interviews.
+
+So before building a complete Agent system from scratch, we should first clarify these core concepts: what they are, what problems they solve, and what role they play in the overall system.
+
+**Even if you are not planning to build an Agent right now, these concepts are still worth learning carefully.** Whether you are using an existing Agent framework, reading papers, or evaluating AI products, understanding these terms precisely saves a lot of trial and error. More importantly, when you see hype full of buzzwords, you can tell what is actually being said instead of being intimidated by terminology.
+
+Below are the key concepts you will repeatedly encounter while building or using Agents. I will explain them in the plainest way and point out where people usually get confused.
+
+## Layered by Learning Order (Easy to Hard)
+
+### Layer 0: Model Input/Output (Fundamentals)
+
+**1) LLM (Large Language Model)**
+A program that takes text and generates text. You give it text; it continues writing or answers your question. In AI workflows, it is the core that handles "thinking" and "decision-making," but that is also its limit.
+
+**2) Token**
+The smallest unit a model processes and also the billing unit. One token is roughly 0.75 English words on average. When you call a model, both input and output are billed by token count, and prices vary by model. For example, Claude Opus is expensive.
+
+**3) Context**
+Everything the model actually sees in this call: conversation history, files you provide, retrieved materials, tool results, and so on.
+
+**3) Context window**
+The upper limit of how much content a model can see in one call. If the input exceeds this limit, earlier content gets truncated, which causes information loss.
+
+**4) Prompt**
+Your input to the model, including instructions, questions, examples, and background materials. In short, what you want it to do this time.
+
+**5) System prompt**
+Rules with higher priority than normal prompts. They define global behavior, response style, and safety boundaries. Usually configured before the conversation starts and effective for the whole session.
+
+**6) AGENTS.md**
+A "project handbook" in a code repository that tells a coding agent how to run and test the project, coding style, and related conventions.
+
+### Layer 1: Let the Model Take Actions and Output Parseable Results
+
+**7) Tools**
+Capabilities that let the model interact with the real outside world: reading/writing files, running commands, querying databases, calling APIs, and more. With tools, the model moves from "only talking" to "actually doing."
+
+**8) Function Calling**
+A mechanism where the model chooses which function to call and generates valid parameters (usually under JSON Schema), then your program executes the function and sends results back to the model for further reasoning.
+
+**9) Structured Output / Schema**
+Making the model output in a required format (such as JSON), so you can parse responses reliably instead of dealing with unstable free-form text.
+
+### Layer 2: Agent Loop and ReAct (Where It Starts to Feel Like an Agent)
+
+**10) Agent**
+LLM + tools + current-progress state + an iterative execution loop. Instead of giving a one-shot answer, it thinks across multiple rounds, calls tools, adjusts plans based on results, and continues until completion.
+
+**11) Agentic loop**
+How an Agent works: decide the next step -> use a tool -> inspect the result -> choose the next step based on what happened. Repeat until the task is done or a stop condition is met.
+
+**12) ReAct**
+
+ReAct (Reasoning and Acting) is the mainstream pattern in current Agent design. Its core loop is **Thought -> Action -> Observation**:
+
+1. **Thought**: Analyze the current state and decide what to do next.
+2. **Action**: Call tools to execute operations.
+3. **Observation**: Read and interpret tool results.
+4. Return to Thought and continue reasoning based on results.
+
+This loop lets the model correct itself with external feedback instead of guessing all the way through in one shot.
+
+### Layer 3: Let Agents Remember, Retrieve, and Stay Traceable
+
+**13) Memory**
+
+In mainstream Agent systems, there are usually at least three kinds of memory:
+
+- Working memory/current state (task progress, plans, TODOs, often only for the current loop)
+- Long-term memory (cross-session, possibly KV/documents/vectors)
+- Evidence/logs (traceable and auditable; not the same thing as memory)
+
+**14) RAG (Retrieval-Augmented Generation)**
+Retrieve relevant materials from an external knowledge base first, then have the model generate answers based on those materials. A model cannot memorize everything because context windows are limited; RAG lets it look things up before answering.
+
+**15) Embeddings**
+Represent text/code as numeric vectors, making it possible for computers to measure semantic similarity. RAG largely relies on this to retrieve relevant information.
+
+**16) Vector Store**
+The storage/indexing layer that supports vector similarity search and performs fast nearest-neighbor retrieval.
+
+### Layer 4: Engineering, Modularity, and Ecosystem Extensions (Closer to Real Products)
+
+**17) SKILL**
+A reusable package of process and conventions (required `SKILL.md` plus optional scripts/references). It usually supports lazy loading: inject metadata first, and load full content only when needed to save tokens.
+
+**18) SubAgent**
+Delegate subtasks to specialized agents to isolate context and avoid polluting the main conversation. Claude Code supports custom subagents for task division.
+
+**19) Multi-agent**
+Multiple agents working in parallel (for example, one explores the codebase, one implements, one writes tests), then aggregating results.
+
+**20) MCP (Model Context Protocol)**
+An open protocol standard proposed by Anthropic for communication between LLM applications (clients) and external systems (servers). It solves fragmented tool integration. Instead of writing one-off adapters for every tool, any tool that implements MCP can be used by any Agent, similar to how USB unified hardware connections.
+
+**21) Sandbox**
+A controlled execution environment for agents. It limits accessible resources within a safety boundary (for example, only specific working directories, restricted network access, command allowlists), reducing risks like deleting system files or leaking secrets.
+
+## Commonly Confused Concepts
+
+### 1. **LLM vs Agent (Most Common Confusion)**
+
+Many people think an LLM is already an Agent. This is the most important misunderstanding:
+
+- **LLM**: just a "talking brain" that passively receives input and generates text; it cannot proactively execute tasks.
+- **Agent**: a full autonomous system centered on an LLM, but with additional capabilities:
+  - Tool usage (read/write files, run commands, query databases)
+  - Memory system (retain prior conversations and decisions)
+  - Execution loop (think -> act -> observe -> adjust repeatedly)
+  - Planning ability (decompose large tasks into smaller steps)
+
+**Analogy**: An LLM is like a knowledgeable advisor who can only give suggestions. An Agent is like an operator that can actually execute work.
+
+### 2. **Prompt vs System Prompt**
+
+Both are inputs to the model, but their priority and scope are very different:
+
+- **Prompt (user prompt)**: the specific question or instruction you give in each interaction; it changes dynamically.
+- **System prompt**: global rules configured before the session starts, defining role, style, and boundaries for the entire conversation.
+
+**Analogy**: The system prompt is the "job description"; each prompt is the "task ticket" you assign this time.
+
+### 3. **RAG vs Embeddings vs Vector Store**
+
+These three concepts collaborate tightly in a RAG system, but each has a distinct role:
+
+- **RAG**: the overall method/architecture that makes the model retrieve before generating, reducing hallucinations.
+- **Embeddings**: the representation format, converting text to vectors so similarity can be computed.
+- **Vector Store**: the storage/search component for vectors, optimized to return the most relevant matches quickly.
+
+**Relationship chain**: RAG is the goal -> Embeddings are the implementation method -> Vector Store is the infrastructure layer.
+
+**Analogy**: RAG is a "library Q&A system," Embeddings are the "book encoding system," and Vector Store is the "smart bookshelf."
+
+### 4. **Context vs Context Window**
+
+- **Context**: all content the model actually sees in this call (chat history, files, retrieval results, etc.).
+- **Context window**: the maximum amount the model can hold (for example, 128k tokens); excess gets truncated.
+
+**Analogy**: Context is all files spread on your desk. Context window is the desk size.
+
+### 5. **Function Calling vs Tools**
+
+- **Function Calling**: a mechanism that lets the model call functions in a required format (JSON Schema).
+- **Tools**: concrete capabilities being called, like "read file," "query database," or "call API."
+
+**Relationship**: Function Calling is the invocation standard, while tools are what gets invoked.
+
+**Analogy**: Function Calling is the "remote-control protocol," and tools are the "appliances being controlled."

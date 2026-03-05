@@ -41,6 +41,12 @@
   - Fumadocs i18n + UI i18n provider
   - 语言切换由 Fumadocs 内置组件提供
 
+## 多语言标题规则
+
+- `content/docs/zh` 下的文档与分组标题必须使用中文（包括 MDX `title` 与 `meta.json` 的 `title`）。
+- `content/docs/en` 下的文档与分组标题必须使用英文（包括 MDX `title` 与 `meta.json` 的 `title`）。
+- 新增或重构文档时，禁止中英文标题混用；保持各语言导航与面包屑显示一致。
+
 ## 关键目录
 
 - `src/app/[lang]/docs`：文档页面路由
